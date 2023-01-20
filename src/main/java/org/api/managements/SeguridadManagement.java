@@ -41,10 +41,10 @@ public class SeguridadManagement {
     public Response getPersonaForId(Long id){
         try{
             Persona persona = this.seguridadService.getPersonaForId(id);
-            if(persona.getId() != 0){
+            if(persona.getId() == null){
                 return ResponseStandarBuilder.responseSingle(Response.Status.BAD_REQUEST, "No hay resultados");
             }
-            return ResponseStandarBuilder.responseObject(Response.Status.OK, "Sin novedades",persona );
+            return ResponseStandarBuilder.responseObject(Response.Status.OK, "Creado sin novedades",persona );
         }catch (Exception e){
             e.printStackTrace();
             return ResponseStandarBuilder.responseObject(Response.Status.INTERNAL_SERVER_ERROR, "Problemas al obtener ALLForId ", e.getMessage());
@@ -60,11 +60,23 @@ public class SeguridadManagement {
         }
     }
 
+    public Response putPrueba(Persona persona){
+        try{
+            this.seguridadService.update(persona);
+            return ResponseStandarBuilder.responseSingle(Response.Status.OK,"Actualizado sin novidades");
+        }catch (Exception e ){
+            return ResponseStandarBuilder.responseObject(Response.Status.INTERNAL_SERVER_ERROR, "Problemas al CREAR LA PERSONA", e.getMessage());
+        }
+    }
+
     public Response deletePrueba(Long id){
         try{
-            Persona persona = new Persona(id,"ISABELLA","ANCHUNDIA RAMIREZ");
+            Persona persona = this.seguridadService.getPersonaForId(id);
+            if(persona.getId() == null){
+                return ResponseStandarBuilder.responseSingle(Response.Status.BAD_REQUEST, "El usuario no existe");
+            }
             this.seguridadService.delete(persona);
-            return ResponseStandarBuilder.responseSingle(Response.Status.OK,"Sin novidades");
+            return ResponseStandarBuilder.responseSingle(Response.Status.OK,"Eliminado sin novidades");
         }catch (Exception e ){
             return ResponseStandarBuilder.responseObject(Response.Status.INTERNAL_SERVER_ERROR, "Problemas al eliminar LA PERSONA", e.getMessage());
         }

@@ -1,5 +1,6 @@
 package org.api.services;
 
+import org.apache.commons.lang3.StringUtils;
 import org.api.models.Persona;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @ApplicationScoped
 public class SeguridadService {
@@ -26,7 +29,7 @@ public class SeguridadService {
     public Persona getPersonaForId(Long id){
         Persona persona = new Persona();
         try{
-            persona= em.createQuery("select a from Persona a where a.id = ?id " ,Persona.class)
+            persona= em.createQuery("select a from Persona a where a.id = :id " ,Persona.class)
                     .setParameter("id",id)
                     .getSingleResult();
         }catch (Exception e){
@@ -37,15 +40,16 @@ public class SeguridadService {
 
     @Transactional
     public void create(Persona persona){
-        //Persona personaNew = new Persona();
-        //personaNew.setApellidos(persona.getApellidos());
-        //personaNew.setNombres(persona.getNombres());
         em.persist(persona);
+    }
 
+    @Transactional
+    public void update(Persona persona){
+        em.merge(persona);
     }
 
     @Transactional
     public void delete(Persona persona){
-        em.remove(persona);
+        em.remove(em.contains(persona) ? persona : em.merge(persona));
     }
 }

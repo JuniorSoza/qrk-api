@@ -58,11 +58,20 @@ public class SeguridadController {
         return this.seguridadManagement.postPrueba(persona);
     }
 
+    @PUT
+    @Operation(summary = "Modificar", description = "modificar elemento")
+    @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT,
+            implementation = Persona.class)), description = "prueba VM", required = true)
+    @APIResponse(responseCode = "200", description = "OK")
+    @APIResponse(responseCode = "400", description = "Bad Request")
+    @APIResponse(responseCode = "500", description = "Internal Server Error")
+    public Response modificarPrueba(Persona persona){
+        return this.seguridadManagement.putPrueba(persona);
+    }
+
     @DELETE
     @Path("{id}")
     @Operation(summary = "eliminar", description = "eliminar objeto")
-    @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT,
-            implementation = Persona.class)), description = "prueba VM", required = true)
     @APIResponse(responseCode = "200", description = "OK")
     @APIResponse(responseCode = "400", description = "Bad Request")
     @APIResponse(responseCode = "500", description = "Internal Server Error")
