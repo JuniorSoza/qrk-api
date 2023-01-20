@@ -1,0 +1,1 @@
+./mvnw quarkus:add-extension -Dextensions='quarkus-smallrye-openapi'
