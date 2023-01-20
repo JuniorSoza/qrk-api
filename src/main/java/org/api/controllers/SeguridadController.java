@@ -1,6 +1,7 @@
 package org.api.controllers;
 
 import org.api.managements.SeguridadManagement;
+import org.api.models.Persona;
 import org.api.objects.Prueba;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -32,7 +33,7 @@ public class SeguridadController {
     @APIResponse(responseCode = "400", description = "Bad Request")
     @APIResponse(responseCode = "500", description = "Internal Server Error")
     public Response getPrueba() {
-        return this.seguridadManagement.getPrueba();
+        return this.seguridadManagement.getAllPrueba();
     }
 
     @GET
@@ -42,18 +43,30 @@ public class SeguridadController {
             implementation = Prueba.class, name = "Prueba"), mediaType = MediaType.APPLICATION_JSON))
     @APIResponse(responseCode = "400", description = "Bad Request")
     @APIResponse(responseCode = "500", description = "Internal Server Error")
-    public Response myPatch(@PathParam("id") String id){
-        return Response.ok(id).build();
+    public Response myPatch(@PathParam("id") Long id){
+        return this.seguridadManagement.getPersonaForId(id);
     }
 
     @POST
     @Operation(summary = "Crear", description = "Crea un nuevo")
     @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT,
-            implementation = Prueba.class)), description = "prueba VM", required = true)
+            implementation = Persona.class)), description = "prueba VM", required = true)
     @APIResponse(responseCode = "200", description = "OK")
     @APIResponse(responseCode = "400", description = "Bad Request")
     @APIResponse(responseCode = "500", description = "Internal Server Error")
-    public Response crearPrueba(Prueba prueba){
-        return this.seguridadManagement.postPrueba(prueba);
+    public Response crearPrueba(Persona persona){
+        return this.seguridadManagement.postPrueba(persona);
+    }
+
+    @DELETE
+    @Path("{id}")
+    @Operation(summary = "eliminar", description = "eliminar objeto")
+    @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT,
+            implementation = Persona.class)), description = "prueba VM", required = true)
+    @APIResponse(responseCode = "200", description = "OK")
+    @APIResponse(responseCode = "400", description = "Bad Request")
+    @APIResponse(responseCode = "500", description = "Internal Server Error")
+    public Response eliminarPrueba(@PathParam("id") Long id){
+        return this.seguridadManagement.deletePrueba(id);
     }
 }
