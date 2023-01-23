@@ -43,7 +43,7 @@ public class SeguridadController {
             implementation = Prueba.class, name = "Prueba"), mediaType = MediaType.APPLICATION_JSON))
     @APIResponse(responseCode = "400", description = "Bad Request")
     @APIResponse(responseCode = "500", description = "Internal Server Error")
-    public Response myPatch(@PathParam("id") Long id){
+    public Response myPatch(@PathParam("id") Integer id){
         return this.seguridadManagement.getPersonaForId(id);
     }
 
@@ -75,7 +75,7 @@ public class SeguridadController {
     @APIResponse(responseCode = "200", description = "OK")
     @APIResponse(responseCode = "400", description = "Bad Request")
     @APIResponse(responseCode = "500", description = "Internal Server Error")
-    public Response eliminarPrueba(@PathParam("id") Long id){
+    public Response eliminarPrueba(@PathParam("id") Integer id){
         return this.seguridadManagement.deletePrueba(id);
     }
 }

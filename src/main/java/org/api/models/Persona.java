@@ -9,7 +9,7 @@ public class Persona {
 
     @Id
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     @Column(name = "nombres")
     private String nombres;
@@ -17,11 +17,11 @@ public class Persona {
     @Column(name = "apellidos")
     private String apellidos;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -44,7 +44,7 @@ public class Persona {
     public Persona() {
     }
 
-    public Persona(Long id, String nombres, String apellidos) {
+    public Persona(Integer id, String nombres, String apellidos) {
         this.id = id;
         this.nombres = nombres;
         this.apellidos = apellidos;

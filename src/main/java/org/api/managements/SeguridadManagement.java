@@ -1,7 +1,6 @@
 package org.api.managements;
 
 import org.api.models.Persona;
-import org.api.objects.Prueba;
 import org.api.objects.ResponseStandarBuilder;
 import org.api.services.SeguridadService;
 
@@ -38,7 +37,7 @@ public class SeguridadManagement {
         }
     }
 
-    public Response getPersonaForId(Long id){
+    public Response getPersonaForId(Integer id){
         try{
             Persona persona = this.seguridadService.getPersonaForId(id);
             if(persona.getId() == null){
@@ -69,7 +68,7 @@ public class SeguridadManagement {
         }
     }
 
-    public Response deletePrueba(Long id){
+    public Response deletePrueba(Integer id){
         try{
             Persona persona = this.seguridadService.getPersonaForId(id);
             if(persona.getId() == null){

@@ -26,7 +26,7 @@ public class SeguridadService {
         return em.createQuery("Select a from Persona a", Persona.class).getResultList();
     }
 
-    public Persona getPersonaForId(Long id){
+    public Persona getPersonaForId(Integer id){
         Persona persona = new Persona();
         try{
             persona= em.createQuery("select a from Persona a where a.id = :id " ,Persona.class)
